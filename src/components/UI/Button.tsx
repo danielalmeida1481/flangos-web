@@ -1,12 +1,16 @@
-/** Button styles dictionary */
-const buttonStyles: { [key: string]: string } = {};
+import { IComponentProps } from "../../common/types";
 
-buttonStyles['default'] = "bg-blue-500 hover:bg-blue-800 focus:bg-blue-900";
+interface IButtonProps extends IComponentProps {
+    style?: string,
+    onClick?: React.MouseEventHandler<HTMLButtonElement>,
+}
 
-export default function Button(props: any) {
-    const { className, style, onClick, children } = props;
-
+export default function Button({ className, style, onClick, children }: IButtonProps) {
     return (
-        <button className={(buttonStyles[style] ?? buttonStyles['default']) + " text-xl p-2 py-3 rounded " + className} onClick={onClick}>{children}</button>
+        <button className={(buttonStyles[style || 'default']) + " text-xl p-2 py-3 rounded " + className} onClick={onClick}>{children}</button>
     );
 }
+
+/** Button styles dictionary */
+const buttonStyles: { [key: string]: string } = {};
+buttonStyles['default'] = "bg-blue-500 hover:bg-blue-800 focus:bg-blue-900";
