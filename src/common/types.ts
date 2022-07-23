@@ -1,5 +1,4 @@
-export interface IComponentProps {
-    className?: string,
-    id?: string,
-    children?: any
+export interface IUser {
+    name: string,
+    email: string
 }

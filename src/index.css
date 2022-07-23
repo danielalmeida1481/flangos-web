@@ -3,6 +3,9 @@
 @tailwind utilities;
 
 body {
-    background-color: #171717;
-    color: #fff;
+    background-color: #111827;
+}
+
+.button-full > button {
+    width: 100%;
 }
