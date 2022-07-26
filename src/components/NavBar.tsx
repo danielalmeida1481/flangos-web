@@ -1,4 +1,4 @@
-import { Avatar, Dropdown, Navbar } from "flowbite-react";
+import { Button, Dropdown, Menu, Navbar } from 'react-daisyui';
 import { useNavigate } from "react-router-dom";
 import auth from "../common/auth";
 
@@ -11,48 +11,61 @@ export default function NavBar({ activePage }: INavBarProps) {
     let user = auth.user();
 
     return (
-        <div className="pt-2 px-2">
-            <Navbar fluid={true} rounded={true}>
-                <Navbar.Brand>
-                    <span className="self-center whitespace-nowrap text-xl text-blue-500 font-bold">
-                        flangos
-                    </span>
-                </Navbar.Brand>
-
-                <div className="flex md:order-2">
-                    <Dropdown
-                        arrowIcon={false}
-                        inline={true}
-                        label={<Avatar alt="User settings" img="https://flowbite.com/docs/images/people/profile-picture-5.jpg" rounded={true} />}
-                    >
-                        <Dropdown.Header>
-                            <span className="block text-sm">
-                                {user.name}
-                            </span>
-
-                            <span className="block truncate text-sm font-medium">
-                                {user.email}
-                            </span>
-                        </Dropdown.Header>
-
-                        <Dropdown.Item onClick={() => { navigate('/user/settings') }}>
-                            Settings
-                        </Dropdown.Item>
-
-                        <Dropdown.Divider />
-
-                        <Dropdown.Item onClick={() => { navigate('/logout') }}>
-                            Logout
-                        </Dropdown.Item>
+        <div>
+            <Navbar>
+                <Navbar.Start>
+                    <Dropdown>
+                        <Button color="ghost" shape="circle">
+                            <svg
+                                xmlns="http://www.w3.org/2000/svg"
+                                className="h-5 w-5"
+                                fill="none"
+                                viewBox="0 0 24 24"
+                                stroke="currentColor"
+                            >
+                                <path
+                                    strokeLinecap="round"
+                                    strokeLinejoin="round"
+                                    strokeWidth={2}
+                                    d="M4 6h16M4 12h16M4 18h7"
+                                />
+                            </svg>
+                        </Button>
+                        <Dropdown.Menu className="bg-neutral menu-compact w-52">
+                            <Dropdown.Item className="active" onClick={() => navigate('/dashboard')}>Dashboard</Dropdown.Item>
+                            <Dropdown.Item onClick={() => navigate('/exercises')}>Exercises</Dropdown.Item>
+                        </Dropdown.Menu>
                     </Dropdown>
-                    <Navbar.Toggle />
-                </div>
-                
-                <Navbar.Collapse>
-                    <Navbar.Link onClick={() => { navigate('/dashboard') }} href="#" active={activePage === "dashboard"}>
-                        Dashboard
-                    </Navbar.Link>
-                </Navbar.Collapse>
+                </Navbar.Start>
+                <Navbar.Center>
+                    <Button color={"primary"} className="normal-case text-xl" onClick={() => navigate('/dashboard')}>
+                        flangos
+                    </Button>
+                </Navbar.Center>
+                <Navbar.End className="navbar-end">
+                    <Dropdown vertical="end">
+                        <Button color="ghost" className="avatar hidden md:inline-flex">
+                            <span className="mr-2 normal-case">{user.name}</span>
+                            <div className="w-10 rounded-full">
+                                <img src="https://api.lorem.space/image/face?hash=33791" />
+                            </div>
+                        </Button>
+                        <Button color="ghost" className="avatar visible md:hidden" shape={"circle"}>
+                            <div className="w-10 rounded-full">
+                                <img src="https://api.lorem.space/image/face?hash=33791" />
+                            </div>
+                        </Button>
+                        <Dropdown.Menu className="bg-neutral w-52 menu-compact">
+                            <Dropdown.Item onClick={() => { navigate('/user/settings') }}>
+                                Settings
+                            </Dropdown.Item>
+
+                            <Dropdown.Item onClick={() => { navigate('/logout') }}>
+                                Logout
+                            </Dropdown.Item>
+                        </Dropdown.Menu>
+                    </Dropdown>
+                </Navbar.End>
             </Navbar>
         </div>
     );

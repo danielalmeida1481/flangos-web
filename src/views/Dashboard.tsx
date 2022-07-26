@@ -9,9 +9,9 @@ export default function Dashboard() {
         <>
             <NavBar activePage="dashboard" />
 
-            <div className="p-2 text-white">
-                <Div>
-                    <h1 className="text-xl">Welcome back <span className="text-blue-500 font-bold">{user.name}</span>!</h1>
+            <div className="container mx-auto p-2">
+                <Div title="Dashboard">
+                    <h1 className="text-xl">Welcome back <span className="text-primary font-bold">{user.name}</span>!</h1>
                 </Div>
             </div>
         </>

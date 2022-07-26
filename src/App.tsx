@@ -11,6 +11,7 @@ import Register from './views/auth/Register';
 import Dashboard from './views/Dashboard';
 import Logout from './views/auth/Logout';
 import UserSettings from './views/user/settings/Settings';
+import Exercises from './views/exercises/Exercises';
 
 /** Intercept HTTP requests to check if the user is not logged in anymore */
 axios.interceptors.response.use(function (response) {
@@ -19,6 +20,8 @@ axios.interceptors.response.use(function (response) {
     const { status } = error.response;
 
     if (status === 401 || status === 419) {
+        console.log(error.response);
+
         if (auth.isAuthed()) {
             auth.logout();
             window.location.href = '/login';
@@ -71,6 +74,12 @@ export default function App() {
                 <Route path='/dashboard' element={
                     <Authed state={true}>
                         <Dashboard />
+                    </Authed>
+                } />
+
+                <Route path='/exercises' element={
+                    <Authed state={true}>
+                        <Exercises />
                     </Authed>
                 } />
 

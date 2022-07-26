@@ -1,14 +1,14 @@
 interface IDivProps {
     title?: string,
     className?: string,
-    children?: React.ReactElement
+    children?: React.ReactElement | React.ReactElement[]
 }
 
 export default function Div({ title, className, children }: IDivProps) {
     const TitleDiv = () => {
         if (title) {
             return (
-                <div className="bg-gray-800 py-3 rounded-t border-solid border-y-4 border-blue-500 uppercase text-center text-white text-xl">
+                <div className="pl-2 mb-2 border-l-2 border-primary uppercase text-primary text-xl">
                     {title}
                 </div>
             );
@@ -21,7 +21,7 @@ export default function Div({ title, className, children }: IDivProps) {
         <div className={className}>
             <TitleDiv />
 
-            <div className={"bg-gray-800 p-4 " + (title ? 'rounded-b' : 'rounded')}>
+            <div className={"bg-base-200 p-4 rounded-lg"}>
                 {children}
             </div>
         </div>

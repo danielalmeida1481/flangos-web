@@ -1,4 +1,3 @@
-import { Spinner } from "flowbite-react";
 import { useEffect, useState } from "react";
 import { Navigate } from "react-router-dom";
 import auth from "../../common/auth";
@@ -22,13 +21,10 @@ export default function Logout() {
     return (
         <div className="flex h-screen">
             <div className="m-auto">
-                <h1 className="text-6xl text-center text-blue-500 font-bold">flangos</h1>
+                <h1 className="text-6xl text-center text-primary font-bold">flangos</h1>
 
                 <div className="my-5 text-center">
-                    <p className="text-2xl text-white">
-                        <span className="mr-2">
-                            <Spinner size={'lg'} light={true} />
-                        </span>
+                    <p className="text-2xl">
                         Logout in progress...
                     </p>
                 </div>

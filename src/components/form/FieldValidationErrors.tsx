@@ -8,7 +8,7 @@ export default function FieldValidationErrors({ errors }: IFieldValidationErrors
             {
                 errors?.map((error) => {
                     return (
-                        <p className="text-red-500">{error}</p>
+                        <p className="text-error" key={error}>{error}</p>
                     );
                 })
             }
