@@ -1,53 +1,114 @@
 import { Button, Input } from 'react-daisyui';
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import FieldValidationErrors from '../../../components/form/FieldValidationErrors';
 import { IForm } from '../../../common/types';
+import ExerciseCategoryFormControl from './ExerciseCategoryFormControl';
+import apiExercise from '../../../services/api/exercise';
 
 interface ISaveErrors {
     name?: string[],
-    category?: string[],
+    category_id?: string[],
+    category_name?: string[],
 }
 
-export default function ExerciseCreateForm({ onSubmit, onError }: IForm) {
+export default function ExerciseCreateForm({ onSubmit, onError, reset, setReset }: IForm) {
     const [name, setName] = useState('');
-    const [category, setCategory] = useState('');
+    const [categoryCreateMode, setCategoryCreateMode] = useState(false);
+    const [categoryName, setCategoryName] = useState('');
+    const [categoryId, setCategoryId] = useState(-1);
+    const [updateCategories, setUpdateCategories] = useState(false);
+
     const [errors, setErrors] = useState<ISaveErrors>({});
     const [saving, setSaving] = useState(false);
 
-    function save(ev: React.MouseEvent<HTMLButtonElement>) {
+    useEffect(() => {
+        if (reset) {
+            setReset(false);
+            resetForm();
+        }
+    }, [reset]);
+
+    function save(ev: React.FormEvent<HTMLFormElement>) {
         ev.preventDefault();
 
         setSaving(true);
         setErrors({});
-        
-        onSubmit?.();
+
+        apiExercise.post?.({
+            name: name,
+            category_id: categoryId,
+            category_name: categoryName
+        })
+        .then(() => {
+            onSubmit?.();
+
+            if (categoryCreateMode) {
+                setUpdateCategories(true);
+            }
+
+            resetForm();
+        })
+        .catch((error) => {
+            const { status, data } = error.response;
+
+            if (status === 422) {
+                const { errors } = data;
+                setErrors(errors);
+            }
+        })
+        .finally(() => {
+            setSaving(false);
+        });
+    }
+
+    function resetForm() {
+        setName('');
+        setCategoryCreateMode(false);
+        setCategoryName('');
+        setCategoryId(-1);
+        setErrors({});
     }
 
     return (
-        <form className="flex flex-col gap-2">
+        <form className="flex flex-col gap-2" onSubmit={(ev: React.FormEvent<HTMLFormElement>) => save(ev)}>
             <div className="form-control w-full">
                 <label className="label" htmlFor="name">
                     <span className="label-text">Name</span>
                 </label>
-                <Input id="name" value={name} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)} type="text" />
+                <Input
+                    id="name"
+                    value={name}
+                    onChange={(e: React.ChangeEvent<HTMLInputElement>) => setName(e.target.value)}
+                    type="text"
+                />
                 <FieldValidationErrors errors={errors.name} />
             </div>
 
             <div className="form-control w-full">
-                <label className="label" htmlFor="category">
-                    <span className="label-text">Category</span>
-                </label>
-                <Input id="category" value={category} onChange={(e: React.ChangeEvent<HTMLInputElement>) => setCategory(e.target.value)} type="text" />
-                <FieldValidationErrors errors={errors.category} />
+                <ExerciseCategoryFormControl
+                    createMode={categoryCreateMode}
+                    setCreateMode={setCategoryCreateMode}
+
+                    name={categoryName}
+                    setName={setCategoryName}
+
+                    categoryId={categoryId}
+                    setCategoryId={setCategoryId}
+
+                    updateCategories={updateCategories}
+                    setUpdateCategories={setUpdateCategories}
+
+                    errors={errors}
+                />
             </div>
 
             <div className="form-control w-full">
                 <Button 
-                    color={"primary"} 
-                    type="submit" 
-                    onClick={(ev) => save(ev)} 
-                    loading={saving} 
-                    disabled={saving}>
+                    color={"primary"}
+                    type="submit"
+                    loading={saving}
+                    disabled={saving}
+                >
                     Save
                 </Button>
             </div>

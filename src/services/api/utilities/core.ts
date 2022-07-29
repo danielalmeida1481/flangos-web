@@ -3,7 +3,7 @@ import { apiProvider } from "./provider";
 export class ApiCore {
   get: ((id?: number) => Promise<any>) | undefined;
   post: ((data?: object) => Promise<any>) | undefined;
-  put: ((data: object) => Promise<any>) | undefined;
+  put: ((data: object, id?: number) => Promise<any>) | undefined;
   remove: ((id: number) => Promise<any>) | undefined;
 
   constructor(options: {
@@ -26,8 +26,8 @@ export class ApiCore {
     }
 
     if (options.put) {
-      this.put = (data: object) => {
-        return apiProvider.put(options.url, data);
+      this.put = (data: object, id?: number) => {
+        return apiProvider.put(options.url, data, id);
       };
     }
 

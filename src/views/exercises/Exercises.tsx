@@ -11,6 +11,9 @@ import ExerciseCreateForm from "./components/ExerciseCreateForm";
 export default function Exercises() {
     const [modalExerciseCreateState, setModalExerciseCreateState] = useState<IModalState>({});
 
+    const [reset, setReset] = useState(false);
+    const [updateTable, setUpdateTable] = useState(false);
+
     return (
         <>
             <NavBar activePage="exercises" />
@@ -21,21 +24,34 @@ export default function Exercises() {
                         <Button 
                             className="flex flex-row gap-1" 
                             color={"primary"} 
-                            onClick={() => setModalExerciseCreateState(prev => ({...prev, open: true}))}>
+                            onClick={() => setModalExerciseCreateState(prev => ({...prev, open: true}))}
+                        >
                             <span className="normal-case">Create</span><PlusCircleIcon className="w-5 h-5" />
                         </Button>
 
                         <ModalForm 
-                            open={modalExerciseCreateState.open} 
-                            title="Create Exercise" 
-                            form={<ExerciseCreateForm/>}
-                            onClose={() => setModalExerciseCreateState(prev => ({...prev, open: false}))}
-                            onSubmit={() => console.log('create')}
-                            onError={() => console.log('create error')} />
+                            open={modalExerciseCreateState.open}
+                            title="Create Exercise"
+                            form={
+                                <ExerciseCreateForm reset={reset} setReset={setReset} />
+                            }
+                            onClose={() => {
+                                setModalExerciseCreateState(prev => ({...prev, open: false}));
+                                setReset(true);
+                            }}
+                            onSubmit={() => {
+                                setModalExerciseCreateState({open: false});
+                                setUpdateTable(true);
+                            }}
+                            onError={() => console.log('create error')}
+                        />
                     </div>
 
                     <div className="w-full overflow-x-auto">
-                        <ExercisesTable />
+                        <ExercisesTable
+                            update={updateTable}
+                            setUpdate={setUpdateTable} 
+                        />
                     </div>
                 </Div>
             </div>

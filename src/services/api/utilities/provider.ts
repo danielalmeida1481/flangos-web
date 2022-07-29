@@ -24,9 +24,12 @@ const post = (resource: string, model: object) => {
     .catch(handleError);
 };
 
-const put = (resource: string, model: object) => {
+const put = (resource: string, model: object, id?: number) => {
+  let url = `${BASE_URL}/${resource}`;
+  if (id) url += `/${id}`;
+
   return axios
-    .put(`${BASE_URL}/${resource}`, model)
+    .put(url, model)
     .then(handleResponse)
     .catch(handleError);
 };
