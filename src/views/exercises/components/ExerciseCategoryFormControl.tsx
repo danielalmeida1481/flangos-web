@@ -20,7 +20,6 @@ interface IExerciseCategoryFormControlProps {
     setCategoryId?: React.SetStateAction<number> | any
 
     updateCategories?: boolean,
-    setUpdateCategories?: React.SetStateAction<boolean> | any,
 
     errors?: ISaveErrors
 }
@@ -32,18 +31,13 @@ interface ICategory {
 
 export default function ExerciseCategoryFormControl(props: IExerciseCategoryFormControlProps) {
     const [categories, setCategories] = useState<ICategory[] | []>([]);
-    const {updateCategories, setUpdateCategories} = props;
-    
-    useEffect(() => {
-        handleUpdateCategories();
-    }, []);
+    const { updateCategories } = props;
 
     useEffect(() => {
         if (updateCategories) {
-            setUpdateCategories(false);
             handleUpdateCategories();
         }
-    }, [updateCategories, setUpdateCategories]);
+    }, [updateCategories]);
 
     function handleUpdateCategories() {
         apiCategory.get?.()

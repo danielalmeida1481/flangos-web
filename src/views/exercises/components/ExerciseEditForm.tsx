@@ -12,12 +12,15 @@ interface ISaveErrors {
     category_name?: string[],
 }
 
-export default function ExerciseEditForm({ onSubmit, onError, reset, setReset, id }: IFormEdit) {
+interface IExerciseEditForm extends IFormEdit {
+    updateCategories?: boolean
+}
+
+export default function ExerciseEditForm({ onSubmit, onError, reset, setReset, id, updateCategories }: IExerciseEditForm) {
     const [name, setName] = useState('');
     const [categoryCreateMode, setCategoryCreateMode] = useState(false);
     const [categoryName, setCategoryName] = useState('');
     const [categoryId, setCategoryId] = useState(-1);
-    const [updateCategories, setUpdateCategories] = useState(false);
 
     const [errors, setErrors] = useState<ISaveErrors>({});
     const [saving, setSaving] = useState(false);
@@ -27,7 +30,7 @@ export default function ExerciseEditForm({ onSubmit, onError, reset, setReset, i
             setReset(false);
             resetForm();
         }
-    }, [reset]);
+    }, [reset, setReset]);
 
     useEffect(() => {
         if (id) {
@@ -64,7 +67,6 @@ export default function ExerciseEditForm({ onSubmit, onError, reset, setReset, i
         }, id)
         .then(() => {
             onSubmit?.();
-            setUpdateCategories(true);
             resetForm();
         })
         .catch((error) => {
@@ -115,7 +117,6 @@ export default function ExerciseEditForm({ onSubmit, onError, reset, setReset, i
                     setCategoryId={setCategoryId}
 
                     updateCategories={updateCategories}
-                    setUpdateCategories={setUpdateCategories}
 
                     errors={errors}
                 />

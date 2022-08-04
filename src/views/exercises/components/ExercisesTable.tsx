@@ -87,18 +87,21 @@ export default function ExercisesTable({ update, setUpdate }: ITable) {
                 open={modalExerciseEditState.open}
                 title="Edit Exercise"
                 form={
-                    <ExerciseEditForm id={editId} />
+                    <ExerciseEditForm
+                        id={editId}
+                        updateCategories={modalExerciseEditState.open}
+                        onSubmit={() => {
+                            setModalExerciseEditState({open: false});
+                            setEditId(-1);
+                            setUpdate(true);
+                        }}
+                    />
                 }
                 onClose={() => {
                     setModalExerciseEditState(prev => ({...prev, open: false}));
                     setEditId(-1);
                 }}
-                onSubmit={() => {
-                    setModalExerciseEditState({open: false});
-                    setEditId(-1);
-                    setUpdate(true);
-                }}
-                onError={() => console.log('edit error')} />
+            />
 
             <Table className="w-full">
                 <thead><HeadFooter /></thead>

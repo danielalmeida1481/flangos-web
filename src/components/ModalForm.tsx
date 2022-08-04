@@ -6,12 +6,10 @@ import { IForm, IModalState } from "../common/types";
 interface IModalFormProps extends IModalState {
     title?: string,
     form?: React.ReactElement<IForm> | any,
-    onSubmit?: () => void,
-    onError?: () => void,
     onClose?: () => void
 }
 
-export default function ModalForm({ open, title, form, onSubmit, onError, onClose }: IModalFormProps) {
+export default function ModalForm({ open, title, form, onClose }: IModalFormProps) {
     return (
         <Modal className="bg-base-200" open={open}>
             <Modal.Header className="border-b-2 border-primary pb-2 text-primary uppercase">
@@ -22,9 +20,7 @@ export default function ModalForm({ open, title, form, onSubmit, onError, onClos
             </Modal.Header>
 
             <Modal.Body>
-                {
-                    React.cloneElement(form, {onSubmit: onSubmit, onError: onError})
-                }
+                {form}
             </Modal.Body>
         </Modal>
     );

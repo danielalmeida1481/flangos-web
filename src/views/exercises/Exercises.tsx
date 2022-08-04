@@ -33,17 +33,20 @@ export default function Exercises() {
                             open={modalExerciseCreateState.open}
                             title="Create Exercise"
                             form={
-                                <ExerciseCreateForm reset={reset} setReset={setReset} />
+                                <ExerciseCreateForm
+                                    reset={reset}
+                                    setReset={setReset}
+                                    updateCategories={modalExerciseCreateState.open}
+                                    onSubmit={() => {
+                                        setModalExerciseCreateState({open: false});
+                                        setUpdateTable(true);
+                                    }}
+                                />
                             }
                             onClose={() => {
                                 setModalExerciseCreateState(prev => ({...prev, open: false}));
                                 setReset(true);
                             }}
-                            onSubmit={() => {
-                                setModalExerciseCreateState({open: false});
-                                setUpdateTable(true);
-                            }}
-                            onError={() => console.log('create error')}
                         />
                     </div>
 

@@ -10,7 +10,7 @@ interface IModalConfirmProps extends IModalState {
 
 export default function ModalConfirm({ open, title, text, confirmLoading, cancelLoading, onConfirm, onCancel }: IModalConfirmProps) {
     return (
-        <Modal className="bg-base-200 w-80" open={open}>
+        <Modal className="bg-base-200" open={open}>
             <Modal.Header className="border-b-2 border-primary pb-2 text-primary uppercase">
                 {title}
             </Modal.Header>

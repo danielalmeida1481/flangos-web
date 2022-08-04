@@ -1,4 +1,4 @@
-import { Button, Dropdown, Menu, Navbar } from 'react-daisyui';
+import { Button, Dropdown, Navbar } from 'react-daisyui';
 import { useNavigate } from "react-router-dom";
 import auth from "../common/auth";
 
@@ -34,6 +34,7 @@ export default function NavBar({ activePage }: INavBarProps) {
                         <Dropdown.Menu className="bg-neutral menu-compact w-52">
                             <Dropdown.Item className="active" onClick={() => navigate('/dashboard')}>Dashboard</Dropdown.Item>
                             <Dropdown.Item onClick={() => navigate('/exercises')}>Exercises</Dropdown.Item>
+                            <Dropdown.Item onClick={() => navigate('/workouts')}>Workouts</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
                 </Navbar.Start>
