@@ -12,12 +12,9 @@ interface ISaveErrors {
     category_name?: string[],
 }
 
-interface IExerciseEditForm extends IFormEdit {
-    updateCategories?: boolean
-}
-
-export default function ExerciseEditForm({ onSubmit, onError, reset, setReset, id, updateCategories }: IExerciseEditForm) {
+export default function ExerciseEditForm({ onSubmit, onError, reset, setReset, id }: IFormEdit) {
     const [name, setName] = useState('');
+    const [updateCategories, setUpdateCategories] = useState(false);
     const [categoryCreateMode, setCategoryCreateMode] = useState(false);
     const [categoryName, setCategoryName] = useState('');
     const [categoryId, setCategoryId] = useState(-1);
@@ -62,12 +59,13 @@ export default function ExerciseEditForm({ onSubmit, onError, reset, setReset, i
 
         apiExercise.put?.({
             name: name,
-            category_id: categoryId,
-            category_name: categoryName
+            category_id: (categoryCreateMode) ? -1 : categoryId,
+            category_name: (categoryCreateMode) ? categoryName : ''
         }, id)
         .then(() => {
             onSubmit?.();
             resetForm();
+            setUpdateCategories(true);
         })
         .catch((error) => {
             const { status, data } = error.response;

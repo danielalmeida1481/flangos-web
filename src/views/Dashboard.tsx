@@ -15,7 +15,7 @@ export default function Dashboard() {
                     <h1 className="text-xl">Welcome back <span className="text-primary font-bold">{user.name}</span>!</h1>
                 </Div>
 
-                <div className="flex flex-row gap-2 mt-2">
+                <div className="flex flex-col md:flex-row gap-2 mt-2">
                     <div className="flex-1">
                         <Button className="w-full" size={"lg"} color={"primary"}>
                             Start Workout

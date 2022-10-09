@@ -5,7 +5,7 @@ const apiCategory = new ApiCore({
     post: true,
     put: false,
     remove: true,
-    url: 'api/category'
+    url: 'api/categories'
 });
 
 export default apiCategory;

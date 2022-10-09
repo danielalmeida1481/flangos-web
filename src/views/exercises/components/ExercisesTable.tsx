@@ -89,7 +89,6 @@ export default function ExercisesTable({ update, setUpdate }: ITable) {
                 form={
                     <ExerciseEditForm
                         id={editId}
-                        updateCategories={modalExerciseEditState.open}
                         onSubmit={() => {
                             setModalExerciseEditState({open: false});
                             setEditId(-1);

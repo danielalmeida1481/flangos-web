@@ -1,8 +1,11 @@
 import { Button, Input } from 'react-daisyui';
 import FieldValidationErrors from '../../../components/form/FieldValidationErrors';
 import { PlusCircleIcon, SelectorIcon } from '@heroicons/react/solid';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect } from 'react';
 import apiCategory from '../../../services/api/category';
+import { categoriesState } from '../../../atoms/exercises';
+import { useRecoilState } from 'recoil';
+import { ICategory } from '../../../services/api/models';
 
 interface ISaveErrors {
     category_id?: string[],
@@ -24,14 +27,13 @@ interface IExerciseCategoryFormControlProps {
     errors?: ISaveErrors
 }
 
-interface ICategory {
-    id: number,
-    name: string
-}
-
 export default function ExerciseCategoryFormControl(props: IExerciseCategoryFormControlProps) {
-    const [categories, setCategories] = useState<ICategory[] | []>([]);
+    const [categories, setCategories] = useRecoilState<ICategory[]>(categoriesState);
     const { updateCategories } = props;
+
+    useEffect(() => {
+        handleUpdateCategories();
+    }, []);
 
     useEffect(() => {
         if (updateCategories) {

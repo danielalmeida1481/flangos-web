@@ -11,13 +11,9 @@ interface ISaveErrors {
     category_name?: string[],
 }
 
-interface IExerciseCreateFormProps extends IForm {
-    updateCategories?: boolean,
-    setUpdateCategories?: React.SetStateAction<boolean> | any
-}
-
-export default function ExerciseCreateForm({ onSubmit, onError, reset, setReset, updateCategories, setUpdateCategories }: IExerciseCreateFormProps) {
+export default function ExerciseCreateForm({ onSubmit, onError, reset, setReset }: IForm) {
     const [name, setName] = useState('');
+    const [updateCategories, setUpdateCategories] = useState(false);
     const [categoryCreateMode, setCategoryCreateMode] = useState(false);
     const [categoryName, setCategoryName] = useState('');
     const [categoryId, setCategoryId] = useState(-1);
@@ -40,12 +36,13 @@ export default function ExerciseCreateForm({ onSubmit, onError, reset, setReset,
 
         apiExercise.post?.({
             name: name,
-            category_id: categoryId,
-            category_name: categoryName
+            category_id: (categoryCreateMode) ? -1 : categoryId,
+            category_name: (categoryCreateMode) ? categoryName : ''
         })
         .then(() => {
             onSubmit?.();
             resetForm();
+            setUpdateCategories(true);
         })
         .catch((error) => {
             const { status, data } = error.response;

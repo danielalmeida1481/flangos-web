@@ -5,7 +5,7 @@ const apiExercise = new ApiCore({
     post: true,
     put: true,
     remove: true,
-    url: 'api/exercise'
+    url: 'api/exercises'
 });
 
 export default apiExercise;

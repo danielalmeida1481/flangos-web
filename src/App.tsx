@@ -1,10 +1,11 @@
 import axios from 'axios';
 import {
-	BrowserRouter,
-	Routes,
-	Route,
+    BrowserRouter,
+    Routes,
+    Route,
     Navigate,
 } from "react-router-dom";
+import { RecoilRoot } from 'recoil';
 import auth from './common/auth';
 import Login from './views/auth/Login';
 import Register from './views/auth/Register';
@@ -12,6 +13,7 @@ import Dashboard from './views/Dashboard';
 import Logout from './views/auth/Logout';
 import UserSettings from './views/user/settings/Settings';
 import Exercises from './views/exercises/Exercises';
+import Workouts from './views/workouts/Workouts';
 
 /** Intercept HTTP requests to check if the user is not logged in anymore */
 axios.interceptors.response.use(function (response) {
@@ -52,56 +54,64 @@ const Authed = ({ state, children }: any) => {
 }
 
 export default function App() {
-	return (
-		<BrowserRouter>
-			<Routes>
-                {/* Non authed routes */}
-                <Route path='/login' element={
-                    <Authed state={false}>
-                        <Login />
-                    </Authed>
-                } />
+    return (
+        <RecoilRoot>
+            <BrowserRouter>
+                <Routes>
+                    {/* Non authed routes */}
+                    <Route path='/login' element={
+                        <Authed state={false}>
+                            <Login />
+                        </Authed>
+                    } />
 
-                <Route path='/register' element={
-                    <Authed state={false}>
-                        <Register />
-                    </Authed>
-                } />
-                
-
-
-                {/* Authed routes */}
-                <Route path='/dashboard' element={
-                    <Authed state={true}>
-                        <Dashboard />
-                    </Authed>
-                } />
-
-                <Route path='/exercises' element={
-                    <Authed state={true}>
-                        <Exercises />
-                    </Authed>
-                } />
-
-                <Route path='/user/settings' element={
-                    <Authed state={true}>
-                        <UserSettings />
-                    </Authed>
-                } />
-
-                <Route path='/logout' element={
-                    <Authed state={true}>
-                        <Logout />
-                    </Authed>
-                } />
+                    <Route path='/register' element={
+                        <Authed state={false}>
+                            <Register />
+                        </Authed>
+                    } />
 
 
 
-                {/* Non existing route */}
-                <Route path='/*' element={
-                    <Navigate to={'/login'} />
-                } />
-			</Routes>
-		</BrowserRouter>
-	);
+                    {/* Authed routes */}
+                    <Route path='/dashboard' element={
+                        <Authed state={true}>
+                            <Dashboard />
+                        </Authed>
+                    } />
+
+                    <Route path='/exercises' element={
+                        <Authed state={true}>
+                            <Exercises />
+                        </Authed>
+                    } />
+
+                    <Route path='/workouts' element={
+                        <Authed state={true}>
+                            <Workouts />
+                        </Authed>
+                    } />
+
+                    <Route path='/user/settings' element={
+                        <Authed state={true}>
+                            <UserSettings />
+                        </Authed>
+                    } />
+
+                    <Route path='/logout' element={
+                        <Authed state={true}>
+                            <Logout />
+                        </Authed>
+                    } />
+
+
+
+                    {/* Non existing route */}
+                    <Route path='/*' element={
+                        <Navigate to={'/login'} />
+                    } />
+                </Routes>
+            </BrowserRouter>
+        </RecoilRoot>
+    );
 }

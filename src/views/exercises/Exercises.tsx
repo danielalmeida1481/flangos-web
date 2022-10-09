@@ -36,7 +36,6 @@ export default function Exercises() {
                                 <ExerciseCreateForm
                                     reset={reset}
                                     setReset={setReset}
-                                    updateCategories={modalExerciseCreateState.open}
                                     onSubmit={() => {
                                         setModalExerciseCreateState({open: false});
                                         setUpdateTable(true);
